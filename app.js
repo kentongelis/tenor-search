@@ -24,8 +24,8 @@ app.set('views', './views');
 // Routes
 
 app.get('/', (req, res) => {
-    const gifURL = 'https://media1.tenor.com/images/561c988433b8d71d378c9ccb4b719b6c/tenor.gif?itemid=10058245'
-    res.render('hello-gif', { gifURL });
+    console.log(req.query)
+    res.render('home')
 })
 
 app.get('/username', (req, res) => {
