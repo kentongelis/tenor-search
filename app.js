@@ -2,6 +2,12 @@
 
 const express = require('express');
 
+const Tenor = require("tenorjs").client({
+    "Key": "AIzaSyBd-HyRA6Vi5RiwSOWxnwlUMMWbgAhabWA",
+    "Filter" : "high",
+    "Locale" : "en_US",
+})
+
 // App Setup
 
 const app = express();
@@ -24,8 +30,15 @@ app.set('views', './views');
 // Routes
 
 app.get('/', (req, res) => {
-    console.log(req.query)
-    res.render('home')
+    term = ""
+    if (req.query.term) {
+        term = req.query.term
+    }
+    Tenor.Search.Query(term, "10")
+        .then(response => {
+            const gifs = response;
+            res.render('home', { gifs })
+        }).catch(console.error);
 })
 
 app.get('/username', (req, res) => {
